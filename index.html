@@ -1,0 +1,337 @@
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reactolith — HTML with React components</title>
+    <meta
+      name="description"
+      content="Reactolith hydrates HTML into React. Any tag with a hyphen becomes a React component. Works with any backend that returns HTML."
+    />
+  </head>
+  <body>
+    <div id="reactolith-app" class="hidden">
+      <app-landing>
+        <!-- HERO -->
+        <section class="relative isolate px-5 pb-24 pt-20 sm:px-8 sm:pb-28 sm:pt-24">
+          <div class="hero-grid"></div>
+
+          <div class="relative mx-auto flex max-w-5xl flex-col gap-7">
+            <a
+              href="https://github.com/reactolith/reactolith"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="eyebrow self-start"
+            >
+              <span class="dot"></span>
+              v1.1.3 · MIT
+              <span aria-hidden="true">→</span>
+            </a>
+
+            <h1
+              class="font-serif text-[clamp(40px,7vw,88px)] font-normal leading-[1.02] tracking-[-0.02em] text-balance"
+            >
+              Use <span class="ink-chip">HTML</span> to compose<br />
+              your <span class="ink-violet">React app.</span>
+            </h1>
+
+            <p class="max-w-xl text-base text-muted-foreground sm:text-lg">
+              Reactolith hydrates HTML into React. Any tag with a hyphen
+              becomes a React component. Everything else stays plain DOM.
+              Works with any backend that returns HTML — or no backend at all.
+            </p>
+
+            <div class="flex flex-wrap items-center gap-3">
+              <a href="/installation/">
+                <ui-button size="lg" class="px-6">
+                  Get started <span aria-hidden="true">→</span>
+                </ui-button>
+              </a>
+              <a href="/quick-start/">
+                <ui-button size="lg" variant="outline" class="px-5 font-mono text-[13px]">
+                  npm i reactolith
+                </ui-button>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <!-- IDEA -->
+        <section id="idea" class="mx-auto max-w-5xl px-5 py-20 sm:px-8">
+          <div class="mb-12 flex max-w-2xl flex-col gap-3">
+            <span
+              class="font-mono text-[11.5px] font-medium uppercase tracking-[0.12em] text-primary"
+            >
+              The idea
+            </span>
+            <h2
+              class="font-serif text-[clamp(28px,4vw,44px)] font-normal leading-[1.1] tracking-[-0.015em]"
+            >
+              It's just HTML with special tags.
+            </h2>
+            <p class="text-base leading-relaxed text-muted-foreground">
+              Your backend renders HTML. Reactolith picks up any tag with a
+              hyphen and renders it through React. Navigation, forms and SSE
+              updates all use the same path: HTML in, React reconciler out.
+            </p>
+          </div>
+
+          <div class="grid gap-4 md:grid-cols-3">
+            <ui-card class="flex flex-col gap-3 p-6">
+              <h3 class="font-serif text-[18px] font-normal tracking-tight">
+                HTML is the wire format
+              </h3>
+              <p class="text-sm leading-relaxed text-muted-foreground">
+                Return HTML from your existing controllers. Tags like
+                <code class="rounded bg-secondary px-1.5 py-0.5 font-mono text-[12px] text-foreground">&lt;my-button&gt;</code>
+                become React components. The rest is plain DOM.
+              </p>
+            </ui-card>
+            <ui-card class="flex flex-col gap-3 p-6">
+              <h3 class="font-serif text-[18px] font-normal tracking-tight">
+                State survives navigation
+              </h3>
+              <p class="text-sm leading-relaxed text-muted-foreground">
+                The built-in router fetches the next page and lets React
+                reconcile against the live tree. Component state, focus and
+                scroll stay where they were.
+              </p>
+            </ui-card>
+            <ui-card class="flex flex-col gap-3 p-6">
+              <h3 class="font-serif text-[18px] font-normal tracking-tight">
+                Real-time, same path
+              </h3>
+              <p class="text-sm leading-relaxed text-muted-foreground">
+                Mercure SSE pushes HTML updates through the same render
+                pipeline. The DOM updates, React state stays.
+              </p>
+            </ui-card>
+          </div>
+        </section>
+
+        <!-- EXAMPLE -->
+        <section id="example" class="mx-auto max-w-5xl px-5 py-20 sm:px-8">
+          <div class="mb-10 flex max-w-2xl flex-col gap-3">
+            <span class="font-mono text-[11.5px] font-medium uppercase tracking-[0.12em] text-primary">
+              Example
+            </span>
+            <h2 class="font-serif text-[clamp(28px,4vw,44px)] font-normal leading-[1.1] tracking-[-0.015em]">
+              Two files.
+            </h2>
+            <p class="text-base leading-relaxed text-muted-foreground">
+              The HTML on the left is whatever your backend already renders.
+              The TSX on the right maps tag names to React components.
+            </p>
+          </div>
+
+          <div class="grid items-stretch gap-4 lg:grid-cols-2">
+            <ui-card class="overflow-hidden p-0">
+              <div class="flex items-center gap-2 border-b border-border bg-muted/40 px-4 py-2.5">
+                <span class="ml-1 font-mono text-[12.5px] font-medium">
+                  index.html
+                  <span class="ml-1 font-normal text-muted-foreground">— from your backend</span>
+                </span>
+              </div>
+              <ui-code-block lang="html" class="m-0 rounded-none border-0">&lt;div id="reactolith-app"&gt;
+  &lt;h1&gt;Hello, {{ user.name }}&lt;/h1&gt;
+
+  &lt;app-counter start="3"&gt;
+    &lt;ui-button variant="primary"&gt;
+      Increment
+    &lt;/ui-button&gt;
+  &lt;/app-counter&gt;
+
+  &lt;form action="{{ path('save') }}" method="post"&gt;
+    &lt;app-autosave-input name="title" /&gt;
+  &lt;/form&gt;
+&lt;/div&gt;</ui-code-block>
+            </ui-card>
+
+            <ui-card class="overflow-hidden p-0">
+              <div class="flex items-center gap-2 border-b border-border bg-muted/40 px-4 py-2.5">
+                <span class="ml-1 font-mono text-[12.5px] font-medium">
+                  app.tsx
+                  <span class="ml-1 font-normal text-muted-foreground">— your React</span>
+                </span>
+              </div>
+              <ui-code-block lang="tsx" class="m-0 rounded-none border-0">import { App } from "reactolith";
+import { Counter } from "./components/counter";
+import { Button } from "./ui/button";
+
+new App(({ is }) =&gt; {
+  switch (is) {
+    case "app-counter":         return Counter;
+    case "ui-button":           return Button;
+    case "app-autosave-input":  return AutosaveInput;
+  }
+});</ui-code-block>
+            </ui-card>
+          </div>
+
+          <p class="mt-6 text-sm text-muted-foreground">
+            Any tag with a hyphen → React component. Everything else → native DOM.
+            <a href="/how-it-works/" class="text-primary underline-offset-4 hover:underline">How it works →</a>
+          </p>
+        </section>
+
+        <!-- FEATURES -->
+        <section id="features" class="mx-auto max-w-5xl px-5 py-20 sm:px-8">
+          <div class="mb-10 flex max-w-2xl flex-col gap-3">
+            <span class="font-mono text-[11.5px] font-medium uppercase tracking-[0.12em] text-primary">
+              Features
+            </span>
+            <h2 class="font-serif text-[clamp(28px,4vw,44px)] font-normal leading-[1.1] tracking-[-0.015em]">
+              What's in the box.
+            </h2>
+          </div>
+
+          <div class="feat-grid">
+            <div class="flex flex-col gap-2 bg-card p-6">
+              <h4 class="font-serif text-[17px] font-normal tracking-tight">Backend-agnostic</h4>
+              <p class="text-[13.5px] leading-snug text-muted-foreground">Any backend, no backend, or a static file on a CDN.</p>
+            </div>
+            <div class="flex flex-col gap-2 bg-card p-6">
+              <h4 class="font-serif text-[17px] font-normal tracking-tight">Backend helpers, intact</h4>
+              <p class="text-[13.5px] leading-snug text-muted-foreground">Path helpers, permission checks, locale switches keep working.</p>
+            </div>
+            <div class="flex flex-col gap-2 bg-card p-6">
+              <h4 class="font-serif text-[17px] font-normal tracking-tight">State preserved</h4>
+              <p class="text-[13.5px] leading-snug text-muted-foreground">Navigate between pages, React state stays.</p>
+            </div>
+            <div class="flex flex-col gap-2 bg-card p-6">
+              <h4 class="font-serif text-[17px] font-normal tracking-tight">Live forms</h4>
+              <p class="text-[13.5px] leading-snug text-muted-foreground">Server can add or remove fields without losing focus.</p>
+            </div>
+            <div class="flex flex-col gap-2 bg-card p-6">
+              <h4 class="font-serif text-[17px] font-normal tracking-tight">Lightweight</h4>
+              <p class="text-[13.5px] leading-snug text-muted-foreground">Small runtime, no compiler step required.</p>
+            </div>
+            <div class="flex flex-col gap-2 bg-card p-6">
+              <h4 class="font-serif text-[17px] font-normal tracking-tight">Real-time</h4>
+              <p class="text-[13.5px] leading-snug text-muted-foreground">Mercure SSE pushes HTML through the same render path.</p>
+            </div>
+            <div class="flex flex-col gap-2 bg-card p-6">
+              <h4 class="font-serif text-[17px] font-normal tracking-tight">Scroll restoration</h4>
+              <p class="text-[13.5px] leading-snug text-muted-foreground">Back-button behaves like a regular browser.</p>
+            </div>
+            <div class="flex flex-col gap-2 bg-card p-6">
+              <h4 class="font-serif text-[17px] font-normal tracking-tight">IDE autocomplete</h4>
+              <p class="text-[13.5px] leading-snug text-muted-foreground">Generate web-types for JetBrains and VS Code.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- COMPARE -->
+        <section id="compare" class="mx-auto max-w-5xl px-5 py-20 sm:px-8">
+          <div class="mb-10 flex max-w-2xl flex-col gap-3">
+            <span class="font-mono text-[11.5px] font-medium uppercase tracking-[0.12em] text-primary">
+              Compared to
+            </span>
+            <h2 class="font-serif text-[clamp(28px,4vw,44px)] font-normal leading-[1.1] tracking-[-0.015em]">
+              Inertia, htmx, Hotwire, SPAs.
+            </h2>
+          </div>
+
+          <ui-card class="overflow-hidden p-0">
+            <div class="overflow-x-auto">
+              <table class="w-full border-collapse text-sm">
+                <thead>
+                  <tr>
+                    <th class="border-b border-border bg-muted/40 px-5 py-3 text-left font-mono text-[12.5px] font-medium tracking-wide text-muted-foreground"></th>
+                    <th class="border-b border-border bg-muted/40 px-5 py-3 text-left">
+                      <span class="font-serif text-[16px] italic font-normal tracking-tight text-foreground">reactolith</span>
+                    </th>
+                    <th class="border-b border-border bg-muted/40 px-5 py-3 text-left font-mono text-[12.5px] font-medium tracking-wide text-muted-foreground">Inertia.js</th>
+                    <th class="border-b border-border bg-muted/40 px-5 py-3 text-left font-mono text-[12.5px] font-medium tracking-wide text-muted-foreground">htmx</th>
+                    <th class="border-b border-border bg-muted/40 px-5 py-3 text-left font-mono text-[12.5px] font-medium tracking-wide text-muted-foreground">Hotwire / Turbo</th>
+                    <th class="border-b border-border bg-muted/40 px-5 py-3 text-left font-mono text-[12.5px] font-medium tracking-wide text-muted-foreground">Full SPA</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="border-b border-border px-5 py-3 font-medium text-foreground">Returns HTML from backend</td>
+                    <td class="compare-yes border-b border-border px-5 py-3 text-center">●</td>
+                    <td class="compare-no border-b border-border px-5 py-3 text-center">○</td>
+                    <td class="compare-yes border-b border-border px-5 py-3 text-center">●</td>
+                    <td class="compare-yes border-b border-border px-5 py-3 text-center">●</td>
+                    <td class="compare-no border-b border-border px-5 py-3 text-center">○</td>
+                  </tr>
+                  <tr>
+                    <td class="border-b border-border px-5 py-3 font-medium text-foreground">Real React components</td>
+                    <td class="compare-yes border-b border-border px-5 py-3 text-center">●</td>
+                    <td class="compare-yes border-b border-border px-5 py-3 text-center">●</td>
+                    <td class="compare-no border-b border-border px-5 py-3 text-center">○</td>
+                    <td class="compare-no border-b border-border px-5 py-3 text-center">○</td>
+                    <td class="compare-yes border-b border-border px-5 py-3 text-center">●</td>
+                  </tr>
+                  <tr>
+                    <td class="border-b border-border px-5 py-3 font-medium text-foreground">State across navigation</td>
+                    <td class="compare-yes border-b border-border px-5 py-3 text-center">●</td>
+                    <td class="compare-mid border-b border-border px-5 py-3 text-center">◐</td>
+                    <td class="compare-no border-b border-border px-5 py-3 text-center">○</td>
+                    <td class="compare-mid border-b border-border px-5 py-3 text-center">◐</td>
+                    <td class="compare-yes border-b border-border px-5 py-3 text-center">●</td>
+                  </tr>
+                  <tr>
+                    <td class="border-b border-border px-5 py-3 font-medium text-foreground">Reuses backend helpers</td>
+                    <td class="compare-yes border-b border-border px-5 py-3 text-center">●</td>
+                    <td class="compare-no border-b border-border px-5 py-3 text-center">○</td>
+                    <td class="compare-yes border-b border-border px-5 py-3 text-center">●</td>
+                    <td class="compare-yes border-b border-border px-5 py-3 text-center">●</td>
+                    <td class="compare-no border-b border-border px-5 py-3 text-center">○</td>
+                  </tr>
+                  <tr>
+                    <td class="border-b border-border px-5 py-3 font-medium text-foreground">Build step required</td>
+                    <td class="compare-yes border-b border-border px-5 py-3 text-center font-mono text-[13px]">no</td>
+                    <td class="compare-no border-b border-border px-5 py-3 text-center font-mono text-[13px]">yes</td>
+                    <td class="compare-yes border-b border-border px-5 py-3 text-center font-mono text-[13px]">no</td>
+                    <td class="compare-mid border-b border-border px-5 py-3 text-center font-mono text-[13px]">small</td>
+                    <td class="compare-no border-b border-border px-5 py-3 text-center font-mono text-[13px]">yes</td>
+                  </tr>
+                  <tr>
+                    <td class="px-5 py-3 font-medium text-foreground">Replaces your router</td>
+                    <td class="compare-yes px-5 py-3 text-center font-mono text-[13px]">no</td>
+                    <td class="compare-no px-5 py-3 text-center font-mono text-[13px]">yes</td>
+                    <td class="compare-yes px-5 py-3 text-center font-mono text-[13px]">no</td>
+                    <td class="compare-no px-5 py-3 text-center font-mono text-[13px]">yes</td>
+                    <td class="compare-no px-5 py-3 text-center font-mono text-[13px]">yes</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </ui-card>
+
+          <p class="mt-6 text-sm text-muted-foreground">
+            More detail in the
+            <a href="/comparisons/" class="text-primary underline-offset-4 hover:underline">comparisons section</a>.
+          </p>
+        </section>
+
+        <!-- CTA -->
+        <section class="mx-auto max-w-3xl px-5 py-20 text-center sm:px-8">
+          <h2 class="font-serif text-[clamp(28px,4vw,40px)] font-normal leading-[1.1] tracking-[-0.015em]">
+            Get started.
+          </h2>
+          <p class="mx-auto mt-3 max-w-lg text-base leading-relaxed text-muted-foreground">
+            One <code class="rounded bg-secondary px-1.5 py-0.5 font-mono text-[14px] font-medium text-foreground">npm install</code>,
+            a few lines of glue, and your backend can render React.
+          </p>
+          <div class="mt-7 flex flex-wrap justify-center gap-3">
+            <a href="/installation/">
+              <ui-button size="lg" class="px-6">
+                Install reactolith <span aria-hidden="true">→</span>
+              </ui-button>
+            </a>
+            <a href="https://github.com/reactolith/reactolith" target="_blank" rel="noopener noreferrer">
+              <ui-button size="lg" variant="outline" class="px-6">
+                GitHub
+              </ui-button>
+            </a>
+          </div>
+        </section>
+      </app-landing>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
