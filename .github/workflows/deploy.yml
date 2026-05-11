@@ -20,6 +20,16 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      # The docs build aliases the `reactolith` import to the library's
+      # src/, which lives in a separate repository. Check it out here and
+      # point REACTOLITH_LIB at it during the build.
+      - name: Checkout reactolith library
+        uses: actions/checkout@v6
+        with:
+          repository: reactolith/reactolith
+          ref: main
+          path: .reactolith-lib
+
       - uses: actions/setup-node@v6
         with:
           node-version: 22
@@ -27,9 +37,15 @@ jobs:
 
       - run: npm install --no-fund --no-audit
 
+      - name: Install reactolith library dependencies
+        working-directory: .reactolith-lib
+        run: npm install --no-fund --no-audit --ignore-scripts
+        continue-on-error: true
+
       - run: npm run build
         env:
           GITHUB_PAGES: "true"
+          REACTOLITH_LIB: ${{ github.workspace }}/.reactolith-lib
 
       - uses: actions/upload-pages-artifact@v5
         with:
