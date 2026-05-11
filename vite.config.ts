@@ -8,6 +8,13 @@ const isPages = process.env.GITHUB_PAGES === "true";
 
 const docsRoot = dirname(new URL(import.meta.url).pathname);
 
+// Locally, this docs site lives inside the reactolith repo at `<lib>/docs`,
+// so the library source sits at `../src`. In CI for the github.io split,
+// the library is checked out separately and pointed to via REACTOLITH_LIB.
+const libRoot = process.env.REACTOLITH_LIB
+  ? resolve(process.env.REACTOLITH_LIB)
+  : resolve(docsRoot, "..");
+
 function findHtmlInputs(): Record<string, string> {
   const inputs: Record<string, string> = {};
   const ignore = new Set(["node_modules", "dist", "src", "public"]);
@@ -53,8 +60,8 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": resolve(docsRoot, "src"),
-      reactolith: resolve(docsRoot, "../src/index.ts"),
-      "reactolith/server": resolve(docsRoot, "../src/server.ts"),
+      reactolith: resolve(libRoot, "src/index.ts"),
+      "reactolith/server": resolve(libRoot, "src/server.ts"),
     },
     dedupe: ["react", "react-dom"],
   },
