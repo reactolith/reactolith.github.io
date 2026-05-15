@@ -35,9 +35,11 @@ jobs:
           node-version: 22
           cache: npm
 
+      - run: npm ci --dev
+
       - name: Install reactolith library dependencies
         working-directory: .reactolith-lib
-        run: npm ci --dev
+        run: npm install --no-fund --no-audit --ignore-scripts
         continue-on-error: true
 
       - run: npm run build
